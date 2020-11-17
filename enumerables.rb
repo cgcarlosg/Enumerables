@@ -76,5 +76,4 @@ module Enumerable
   def multiply_els(arr)
     arr.my_inject { |result, item| result * item }
   end
-  puts "The test has to print the product '40', result => #{multiply_els([2, 4, 5])} "  
 end
