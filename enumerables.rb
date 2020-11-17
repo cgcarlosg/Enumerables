@@ -1,3 +1,5 @@
+# rubocop:disable Style/For
+
 module Enumerable
   def my_each
     for i in 0..(length - 1)
@@ -77,3 +79,5 @@ module Enumerable
     arr.my_inject { |result, item| result * item }
   end
 end
+
+# rubocop:enable Style/For
