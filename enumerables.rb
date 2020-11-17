@@ -64,4 +64,17 @@ module Enumerable
     end
     arr
   end
+
+  def my_inject
+    result = first
+    my_each_with_index do |item, index|
+      result = yield(result, item) if index.positive?
+    end
+    result
+  end
+
+  def multiply_els(arr)
+    arr.my_inject { |result, item| result * item }
+  end
+  puts "The test has to print the product '40', result => #{multiply_els([2, 4, 5])} "  
 end
