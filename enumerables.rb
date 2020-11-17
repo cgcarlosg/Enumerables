@@ -6,5 +6,13 @@ module Enumerable
     self
   end
 
+  def my_each_with_index
+    i = 0
+    until i == size
+      yield(self[i], i)
+      i += 1
+    end
+    self
+  end
   
 end
