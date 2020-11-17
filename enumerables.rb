@@ -32,4 +32,22 @@ module Enumerable
     end
     true
   end
+
+  def my_any?
+    result = false
+    my_each do |item|
+      result = true if yield item
+    end
+    result
+  end
+
+  def my_none?
+    result = true
+    my_each do |item|
+      result = false if yield item
+    end
+    result
+  end
+
+
 end
