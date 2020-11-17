@@ -14,5 +14,22 @@ module Enumerable
     end
     self
   end
-  
+
+  def my_select
+    arr = []
+    if block_given?
+      for i in 0..(length - 1)
+        yield(self[i]) ? arr.push(self[i]) : false
+      end
+      return arr
+    end
+    to_enum
+  end
+
+  def my_all?
+    for i in 0..(length - 1)
+      return false unless yield(self[i])
+    end
+    true
+  end
 end
