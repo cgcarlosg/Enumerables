@@ -49,5 +49,19 @@ module Enumerable
     result
   end
 
+  def my_count
+    count = 0
+    for i in 0..(length - 1)
+      count += 1 if yield(self[i])
+    end
+    count
+  end
 
+  def my_map(proc = nil)
+    arr = []
+    for i in 0..(length - 1)
+      proc ? arr.push(proc.call(self[i])) : arr.push(yield(self[i]))
+    end
+    arr
+  end
 end
