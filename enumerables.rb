@@ -17,43 +17,65 @@ module Enumerable
     arr
   end
 
-  def my_all?
-    for i in 0..(length - 1)
-      return false unless yield(self[i])
-    end
-    true
-  end
-
-  def my_any?
-    result = false
-    my_each do |item|
-      result = true if yield item
-    end
-    result
-  end
-
-  def my_none?
+  def my_all?(arg = nil)
     result = true
-    my_each do |item|
-      result = false if yield item
+    if block_given? || arg.nil?
+      my_each { |item| result = false unless yield item }
+    elsif arg.is_a? Regexp
+      my_each { |item|  result = false unless item.to_s.match(arg) }
+    else arg.instance_of? Class
+      my_each { |item|  result = false unless item.is_a? == arg}
     end
     result
+    end
+
+  def my_any?(arg = nil)
+    result = false
+    if block_given? || arg.nil?
+      my_each { |item| result = true if yield item }
+    elsif arg.is_a? Regexp
+      my_each { |item|  result = true if item.to_s.match(arg) }
+    else arg.instance_of? Class
+      my_each { |item|  result = true if item.is_a? == arg}
+    end
+    result
+    end
+
+
+  def my_none?(arg = nil)
+    result = true
+    if block_given? || arg.nil?
+      my_each { |item| result = false if yield item }
+    elsif arg.is_a? Regexp
+      my_each { |item|  result = false if item.to_s.match(arg) }
+    else arg.instance_of? Class
+      my_each { |item|  result = false if item.is_a? == arg}
+    end
+    result
+    end
+
+  def my_count(arg = nil)
+    if arg.nil? && !block_given?
+      self.length
+    else
+    counter = 0
+    my_each do |item| 
+      counter += 1 if yield item
+    end
+  end
+    counter
   end
 
-  def my_count
-    count = 0
-    for i in 0..(length - 1)
-      count += 1 if yield(self[i])
+  def my_map
+    if block_given?
+    finalarray = []
+    my_each do |item|
+      finalarray.push(yield item)
     end
-    count
+    finalarray
+  else
+    to_enum(:my_map)
   end
-
-  def my_map(proc = nil)
-    arr = []
-    for i in 0..(length - 1)
-      proc ? arr.push(proc.call(self[i])) : arr.push(yield(self[i]))
-    end
-    arr
   end
 
   def my_inject
