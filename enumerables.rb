@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 module Enumerable
   def my_each
     block_given? ? size.times { |i| yield(to_a[i]) } : to_enum
@@ -16,39 +18,54 @@ module Enumerable
   end
 
   def my_all?(arg = nil)
-    result = true
-    if block_given? || arg.nil?
-      my_each { |item| result = false unless yield item }
-    elsif arg.is_a? Regexp
-      my_each { |item| result = false unless item.to_s.match(arg) }
-    elsif arg.instance_of? Class
-      my_each { |item| result = false unless item.is_a? == arg }
+    my_each do |e|
+      if block_given?
+        return false unless yield(e)
+      elsif arg.is_a? Regexp
+        return false unless e.to_s =~ arg
+      elsif arg.instance_of?(Class)
+        return false unless e.instance_of?(arg)
+      elsif arg
+        return false unless e == arg
+      else
+        return true
+      end
     end
-    result
+    true
   end
 
   def my_any?(arg = nil)
-    result = false
-    if block_given? || arg.nil?
-      my_each { |item| result = true if yield item }
-    elsif arg.is_a? Regexp
-      my_each { |item| result = true if item.to_s.match(arg) }
-    elsif arg.instance_of? Class
-      my_each { |item| result = true if item.is_a? == arg }
+    my_each do |e|
+      if block_given?
+        return true if yield(e)
+      elsif arg.is_a? Regexp
+        return true if e.to_s =~ arg
+      elsif arg.instance_of?(Class)
+        return true if e.instance_of?(arg)
+      elsif arg
+        return true if e == arg
+      else
+        return false
+      end
     end
-    result
+    false
   end
 
   def my_none?(arg = nil)
-    result = true
-    if block_given? || arg.nil?
-      my_each { |item| result = false if yield item }
-    elsif arg.is_a? Regexp
-      my_each { |item| result = false if item.to_s.match(arg) }
-    elsif arg.instance_of? Class
-      my_each { |item| result = false if item.is_a? == arg }
+    my_each do |e|
+      if block_given?
+        return true unless yield(e)
+      elsif arg.is_a? Regexp
+        return true unless e.to_s =~ arg
+      elsif arg.instance_of?(Class)
+        return true unless e.instance_of?(arg)
+      elsif arg
+        return true unless e == arg
+      else
+        return false
+      end
     end
-    result
+    false
   end
 
   def my_count(arg = nil)
@@ -80,7 +97,7 @@ module Enumerable
       if !acc
         acc = e
       elsif acc.instance_of?(Range)
-        my_each { |e| acc += e }
+        my_each { |i| acc += i }
       else
         acc = yield(acc, e)
       end
@@ -92,3 +109,6 @@ module Enumerable
     arr.my_inject { |i, j| i * j }
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
