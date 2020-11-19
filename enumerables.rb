@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ModuleLength
+
 module Enumerable
   def my_each
     block_given? ? size.times { |i| yield(to_a[i]) } : (return to_enum)
@@ -121,3 +123,4 @@ end
 
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ModuleLength
