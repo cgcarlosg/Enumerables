@@ -104,10 +104,10 @@ module Enumerable
     end
     acc
   end
+end
 
-  def multiply_els(arr)
-    arr.my_inject { |i, j| i * j }
-  end
+def multiply_els(arr)
+  arr.my_inject { |i, j| i * j }
 end
 
 # rubocop:enable Metrics/CyclomaticComplexity
