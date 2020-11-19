@@ -21,10 +21,12 @@ module Enumerable
     my_each do |e|
       if block_given?
         return false unless yield(e)
+      elsif !block_given? && !arg
+        return false
       elsif arg.is_a? Regexp
         return false unless e.to_s =~ arg
       elsif arg.instance_of?(Class)
-        return false unless e.instance_of?(arg)
+        return false unless e.is_a? arg
       elsif arg
         return false unless e == arg
       else
@@ -38,10 +40,12 @@ module Enumerable
     my_each do |e|
       if block_given?
         return true if yield(e)
+      elsif !block_given? && !arg
+        return true if e
       elsif arg.is_a? Regexp
         return true if e.to_s =~ arg
       elsif arg.instance_of?(Class)
-        return true if e.instance_of?(arg)
+        return true if e.is_a? arg
       elsif arg
         return true if e == arg
       else
@@ -54,11 +58,13 @@ module Enumerable
   def my_none?(arg = nil)
     my_each do |e|
       if block_given?
-        return true unless yield(e)
+        return false if yield(e)
+      elsif !block_given? && !arg
+        return true unless e
       elsif arg.is_a? Regexp
         return true unless e.to_s =~ arg
       elsif arg.instance_of?(Class)
-        return true unless e.instance_of?(arg)
+        return true unless e.is_a? arg
       elsif arg
         return true unless e == arg
       else
@@ -70,17 +76,17 @@ module Enumerable
 
   def my_count(arg = nil)
     if arg.nil? && !block_given?
-      self.size
+      size
     elsif block_given?
-    counter = 0
-    my_each do |item| 
-      counter += 1 if yield item
+      counter = 0
+      my_each do |item|
+        counter += 1 if yield item
+      end
+      counter
+    else
+      arg_selected = my_select { |item| item == arg }
+      arg_selected.size
     end
-    counter
-  else
-    arg_selected = my_select { |item| item == arg}
-    arg_selected.size
-  end
   end
 
   def my_map(proc = nil)
