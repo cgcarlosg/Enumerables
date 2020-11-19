@@ -70,14 +70,17 @@ module Enumerable
 
   def my_count(arg = nil)
     if arg.nil? && !block_given?
-      length
-    else
-      counter = 0
-      my_each do |item|
-        counter += 1 if yield item
-      end
+      self.size
+    elsif block_given?
+    counter = 0
+    my_each do |item| 
+      counter += 1 if yield item
     end
     counter
+  else
+    arg_selected = my_select { |item| item == arg}
+    arg_selected.size
+  end
   end
 
   def my_map(proc = nil)
