@@ -2,18 +2,18 @@
 # rubocop:disable Metrics/PerceivedComplexity
 module Enumerable
   def my_each
-    block_given? ? size.times { |i| yield(to_a[i]) } : to_enum
+    block_given? ? size.times { |i| yield(to_a[i]) } : (return to_enum)
     self
   end
 
   def my_each_with_index
-    block_given? ? size.times { |i| yield(to_a[i], i) } : to_enum
+    block_given? ? size.times { |i| yield(to_a[i], i) } : (return to_enum)
     self
   end
 
   def my_select
     arr = []
-    block_given? ? my_each { |e| arr.push(e) if yield(e) } : to_enum
+    block_given? ? my_each { |e| arr.push(e) if yield(e) } : (return to_enum)
     arr
   end
 
