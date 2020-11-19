@@ -1,6 +1,5 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
-
 module Enumerable
   def my_each
     block_given? ? size.times { |i| yield(to_a[i]) } : (return to_enum)
@@ -90,17 +89,23 @@ module Enumerable
     arr
   end
 
-  def my_inject(acc = nil)
-    my_each do |e|
-      if !acc
-        acc = e
-      elsif acc.instance_of?(Range)
-        my_each { |i| acc += i }
-      else
-        acc = yield(acc, e)
+  def my_inject(*arg)
+    arr = is_a?(Array) ? self : to_a
+
+    if arg[0].is_a?(Integer) && arg[1].is_a?(Symbol)
+      result = arg[0]
+
+    elsif arg[0].is_a?(Symbol)
+      arr.my_each do |item|
+        result = result ? result.send(arg[0], item) : item
+      end
+
+    else
+      arr.my_each do |item|
+        result = result ? yield(result, item) : item
       end
     end
-    acc
+    result
   end
 end
 
