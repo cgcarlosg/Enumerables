@@ -27,7 +27,7 @@ module Enumerable
     elsif arg
       my_each { |e| return false unless e == arg }
     else
-      return true
+      my_each { |e| return false unless e }
     end
     true
   end
