@@ -91,18 +91,19 @@ module Enumerable
 
   def my_inject(*arg)
     arr = is_a?(Array) ? self : to_a
-
-    if arg[0].is_a?(Integer) && arg[1].is_a?(Symbol)
-      result = arg[0]
-
-    elsif arg[0].is_a?(Symbol)
-      arr.my_each do |item|
-        result = result ? result.send(arg[0], item) : item
+    arg[0].is_a?(Integer) ? initial_val = arg[0] : simbol = arg[0]
+    if initial_val && !arg[1].is_a?(Integer)
+      initial_val = arg[0]
+      simbol = arg[1]
+    end
+    result = initial_val
+    if simbol
+      arr.my_each do |elem|
+        result = result ? result.send(simbol, elem) : elem
       end
-
     else
-      arr.my_each do |item|
-        result = result ? yield(result, item) : item
+      arr.my_each do |elem|
+        result = result ? yield(result, elem) : elem
       end
     end
     result
