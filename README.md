@@ -4,7 +4,16 @@
 
 > Ruby Enumerable methods.
 
-Reimplementation of the following Ruby Enumerable methods: #each, #each_with_index, #select, #all, #any, #none, #count, #map and #inject.
+Reimplementation of the following Ruby Enumerable methods:
+- #each
+- #each_with_index
+- #select
+- #all
+- #any
+- #none
+- #count
+- #map
+- #inject
 
 ## Built With
 
@@ -50,7 +59,7 @@ ruby enumerables.rb
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](issues/).
+Feel free to check the [issues page](https://github.com/cgcarlosg/Enumerables/issues/).
 
 ## Show your support
 
