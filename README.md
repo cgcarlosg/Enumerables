@@ -19,6 +19,7 @@ Reimplementation of the following Ruby Enumerable methods:
 
 - Ruby
 - Rubocop
+- RSpec
 
 ## Getting Started
 
@@ -40,6 +41,18 @@ To get a local copy up and running follow these simple steps.
 ```ruby
 ruby enumerables.rb
 ```
+
+### Run tests
+
+In order to run the test you´ll need to have Rspec install
+
+- gem install rspec
+- for linux sudo gem install rspec
+
+Go into the root directory od the project and execute Rspec
+
+rspec +<the name of the file>
+
 
 ## Authors
 
