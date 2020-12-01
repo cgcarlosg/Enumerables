@@ -56,11 +56,11 @@ rspec +<the name of the file>
 
 ## Authors
 
-👨‍💻 **Breno Xavier**
+👤 **Janluc Saneaux**
 
-- GitHub: [@brenoxav](https://github.com/brenoxav)
-- Twitter: [@brenoxav](https://twitter.com/brenoxav)
-- LinkedIn: [Breno Xavier](https://linkedin.com/in/brenoxav)
+- Github: [@Janluc](https://github.com/Janluc)   
+- Twitter: [@Janluc123](https://twitter.com/Janluc123)
+- Linkedin: [linkedin](https://www.linkedin.com/in/janluc-saneaux-91707a1b4/) 
 
 👨‍💻 **Carlos Gutierrez**
 
