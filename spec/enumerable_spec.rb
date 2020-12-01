@@ -18,6 +18,10 @@ describe Enumerable do
         expect(value).to eql(hash[key])
       end
     end
+
+    it 'return enumerator if no block is given' do
+      expect(array.my_each.class).to eql(Enumerator)
+    end
   end
 
   describe '#my_each_with_index' do
@@ -29,6 +33,10 @@ describe Enumerable do
         i += 1
       end
     end
+
+    it 'return enumerator if no block is given' do
+      expect(array.my_each_with_index.class).to eql(Enumerator)
+    end
   end
 
   describe '#my_select' do
@@ -39,17 +47,29 @@ describe Enumerable do
     it 'return a new hash based on block provided' do
       expect(hash.my_select { |_key, value| value == 'enum' }).to eql([%w[a enum]])
     end
+
+    it 'does not return array if no block is provided' do
+      expect(array.my_select.is_a?(Array)).to eql(false)
+    end
+
+    it 'does not return a hash if no block is provided' do
+      expect(hash.my_select.is_a?(Hash)).to eql(false)
+    end
   end
 
   describe '#my_all?' do
     it 'return true if all elements meet block given' do
+      expect(array.my_all? { |num| num.is_a? Numeric }).to eql(true)
+      expect(hash.my_all? { |value| value.is_a? Enumerable }).to eql(true)
+    end
+
+    it 'return false if one element does not meet block given' do
       expect(array.my_all? { |num| num == 1 }).to eql(false)
       expect(hash.my_all? { |_key, value| value == 'enum' }).to eql(false)
     end
 
-    it 'return false if one element does not meet block given' do
-      expect(array.my_all? { |num| num.is_a? Numeric }).to eql(true)
-      expect(hash.my_all? { |value| value.is_a? Enumerable }).to eql(true)
+    it 'return true if no block is given' do
+      expect(array.my_all?).to eql(true)
     end
   end
 
@@ -63,6 +83,10 @@ describe Enumerable do
       expect(array.my_any? { |num| num == 4 }).to eql(false)
       expect(hash.my_any? { |_key, value| value == 'hello' }).to eql(false)
     end
+
+    it 'return true if no block is given' do
+      expect(array.my_any?).to eql(true)
+    end
   end
 
   describe '#my_none?' do
@@ -74,6 +98,10 @@ describe Enumerable do
     it 'return false if any element meets block given' do
       expect(array.my_none? { |num| num == 1 }).to eql(false)
       expect(hash.my_none? { |_key, value| value == 'enum' }).to eql(false)
+    end
+
+    it 'return true if no block given and no element is true' do
+      expect([].my_none?).to eql(true)
     end
   end
 
@@ -102,6 +130,10 @@ describe Enumerable do
     end
     it 'return new hash with elements modified by block' do
       expect(array.my_map { 'hello' }).to eql(%w[hello hello hello])
+    end
+
+    it 'return enumerator if no block is given' do
+      expect(array.my_map.class).to eql(Enumerator)
     end
   end
 

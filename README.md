@@ -49,9 +49,9 @@ In order to run the test you´ll need to have Rspec install
 - gem install rspec
 - for linux sudo gem install rspec
 
-Go into the root directory od the project and execute Rspec
+Go into the root directory of the project and execute Rspec
 
-rspec +<the name of the file>
+rspec <the name of the file>
 
 
 ## Authors
