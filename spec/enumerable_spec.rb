@@ -101,7 +101,7 @@ describe Enumerable do
       expect(array.my_map { |num| num * 2 }).to eql([2, 4, 6])
     end
     it 'return new hash with elements modified by block' do
-      expect(array.my_map { |_key, value| value = 'hello' }).to eql(%w[hello hello hello])
+      expect(array.my_map { 'hello' }).to eql(%w[hello hello hello])
     end
   end
 
