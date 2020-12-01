@@ -55,7 +55,7 @@ describe Enumerable do
 
   describe '#my_any?' do
     it 'return true if any element meets block given' do
-      expect(array.my_any? { |num| num.even? }).to eql(true)
+      expect(array.my_any?(&:even?)).to eql(true)
       expect(hash.my_any? { |_key, value| value == 'enum' }).to eql(true)
     end
 
@@ -77,28 +77,37 @@ describe Enumerable do
     end
   end
 
-  # describe '#my_count' do
-  # it  do
-  #     expect
-  # end
-  # end
-  #
-  # describe '#my_map' do
-  # it  do
-  #     expect
-  # end
-  # end
-  #
-  # describe '#my_inject' do
-  # it  do
-  #     expect
-  # end
-  # end
-  #
-  # describe '#multiply_els' do
-  # it  do
-  #     expect
-  # end
-  # end
-  #
+  describe '#my_count' do
+    it 'return number of elements in enumerable' do
+      expect(array.my_count).to eql(3)
+      expect(hash.my_count).to eql(3)
+
+      expect(array.my_count).to_not eql(2)
+      expect(hash.my_count).to_not eql(2)
+    end
+
+    it 'return number of elements that match block given' do
+      expect(array.my_count(&:even?)).to eql(1)
+      expect(hash.my_count { |_key, value| value == 'enum' }).to eql(1)
+    end
+
+    it 'return number of elements that match parameter' do
+      expect(array.my_count(1)).to eql(1)
+    end
+  end
+
+  describe '#my_map' do
+    it 'return new array with elements modified by block' do
+      expect(array.my_map { |num| num * 2 }).to eql([2, 4, 6])
+    end
+    it 'return new hash with elements modified by block' do
+      expect(array.my_map { |_key, value| value = 'hello' }).to eql(%w[hello hello hello])
+    end
+  end
+
+  describe '#my_inject' do
+    it 'return sum of numbers in array' do
+      expect(array.my_inject(:+)).to eql(6)
+    end
+  end
 end
